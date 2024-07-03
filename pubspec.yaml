@@ -1,7 +1,7 @@
 name: tiktok_clone
 description: "A new Flutter project."
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -12,10 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
+  intl: any
   cupertino_icons: ^1.0.6
-  font_awesome_flutter : 10.3.0
+  font_awesome_flutter: 10.3.0
   video_player: 2.4.10
   visibility_detector: 0.3.3
+  google_fonts: 4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -25,8 +30,12 @@ dev_dependencies:
 
 flutter:
 
+  generate: true
+
   uses-material-design: true
 
   assets:
     - assets/videos/
     - assets/images/
+flutter_intl:
+  enabled: true

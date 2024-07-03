@@ -4,6 +4,7 @@ import 'package:tiktok_clone/contants/gaps.dart';
 import 'package:tiktok_clone/contants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -31,21 +32,21 @@ class LogInScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
+              Text(
                 'Log in to TikTok',
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               Gaps.v20,
-              const Text(
-                'Manage your account, check notifications, comment on videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black54,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  'Manage your account, check notifications, comment on videos, and more.',
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.black54,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
@@ -62,10 +63,11 @@ class LogInScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
+        color: isDarkMode(context) ? null : Colors.grey.shade50,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size20,
+          padding: const EdgeInsets.all(
+            Sizes.size28,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

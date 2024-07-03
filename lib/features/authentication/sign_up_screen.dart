@@ -5,6 +5,8 @@ import 'package:tiktok_clone/contants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/log_in_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -22,70 +24,105 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size40,
-          ),
-          child: Column(
-            children: [
-              Gaps.v80,
-              const Text(
-                'Sign up for TikTok',
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.landscape) {
+          return const Scaffold(
+            body: Center(
+              child: Text("Please rotate your phone."),
+            ),
+          );
+        }
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size40,
               ),
-              Gaps.v20,
-              const Text(
-                'Create a profile, follow other accounts, make your own videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black54,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Gaps.v40,
-              GestureDetector(
-                onTap: () => _onEmailTap(context),
-                child: const AuthButton(
-                    icon: FaIcon(FontAwesomeIcons.user),
-                    text: 'Use email & password'),
-              ),
-              Gaps.v5,
-              const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.apple),
-                  text: 'Continue with Apple'),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size20,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Already have an account?'),
-              Gaps.h5,
-              GestureDetector(
-                onTap: () => _onLoginTap(context),
-                child: Text(
-                  'Log in',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
+              child: Column(
+                children: [
+                  Gaps.v80,
+                  Text(
+                    S.of(context).signUpTitle(
+                          "TikTok",
+                          DateTime.now(),
+                        ),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                ),
+                  Gaps.v20,
+                  Opacity(
+                    opacity: 0.7,
+                    child: Text(
+                      S.of(context).signUpSubtitle(2),
+                      style: Theme.of(context).textTheme.titleMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Gaps.v40,
+                  if (orientation == Orientation.portrait) ...[
+                    GestureDetector(
+                      onTap: () => _onEmailTap(context),
+                      child: AuthButton(
+                          icon: const FaIcon(FontAwesomeIcons.user),
+                          text: S.of(context).emailPasswordButton),
+                    ),
+                    Gaps.v5,
+                    AuthButton(
+                        icon: const FaIcon(FontAwesomeIcons.apple),
+                        text: S.of(context).appleButton),
+                  ],
+                  if (orientation == Orientation.landscape)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => _onEmailTap(context),
+                            child: AuthButton(
+                                icon: const FaIcon(FontAwesomeIcons.user),
+                                text: S.of(context).emailPasswordButton),
+                          ),
+                        ),
+                        Gaps.h5,
+                        Expanded(
+                          child: AuthButton(
+                              icon: const FaIcon(FontAwesomeIcons.apple),
+                              text: S.of(context).appleButton),
+                        ),
+                      ],
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+          bottomNavigationBar: Container(
+            color: isDarkMode(context)
+                ? Colors.grey.shade900
+                : Colors.grey.shade50,
+            child: Padding(
+              padding: const EdgeInsets.all(
+                Sizes.size28,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(S.of(context).alreadyHaveAnAccount),
+                  Gaps.h5,
+                  GestureDetector(
+                    onTap: () => _onLoginTap(context),
+                    child: Text(
+                      S.of(context).logIn("male"),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

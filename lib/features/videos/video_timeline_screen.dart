@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 class VideoTimelineScreen extends StatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -52,6 +53,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // S.load(const Locale("ko"));
     return RefreshIndicator(
       color: Theme.of(context).primaryColor,
       displacement: 50,

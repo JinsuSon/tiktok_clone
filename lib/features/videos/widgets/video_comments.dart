@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/contants/gaps.dart';
 import 'package:tiktok_clone/contants/sizes.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -35,6 +37,7 @@ class _VideoCommentsState extends State<VideoComments> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = isDarkMode(context);
 
     return Container(
       height: size.height * 0.80,
@@ -43,11 +46,11 @@ class _VideoCommentsState extends State<VideoComments> {
         borderRadius: BorderRadius.circular(Sizes.size14),
       ),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: isDark ? null : Colors.grey.shade50,
         appBar: AppBar(
-          backgroundColor: Colors.grey.shade50,
-          title: const Text(
-            "22796 comments",
+          backgroundColor: isDark ? null : Colors.grey.shade50,
+          title: Text(
+            S.of(context).commentTitle(364, 364),
           ),
           automaticallyImplyLeading: false,
           actions: [
@@ -123,13 +126,15 @@ class _VideoCommentsState extends State<VideoComments> {
                 bottom: 0,
                 width: size.width,
                 child: BottomAppBar(
-                  color: Colors.white,
+                  color: isDark ? Colors.black : Colors.white,
                   child: Row(
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.grey.shade500,
-                        foregroundColor: Colors.white,
+                        backgroundColor: isDark
+                            ? Colors.grey.shade200
+                            : Colors.grey.shade700,
+                        foregroundColor: isDark ? Colors.black : Colors.white,
                         child: const Text("니꼬"),
                       ),
                       Gaps.h10,
@@ -151,17 +156,23 @@ class _VideoCommentsState extends State<VideoComments> {
                                 children: [
                                   FaIcon(
                                     FontAwesomeIcons.at,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade200
+                                        : Colors.grey.shade500,
                                   ),
                                   Gaps.h5,
                                   FaIcon(
                                     FontAwesomeIcons.gift,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade200
+                                        : Colors.grey.shade500,
                                   ),
                                   Gaps.h5,
                                   FaIcon(
                                     FontAwesomeIcons.faceSmile,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade200
+                                        : Colors.grey.shade500,
                                   ),
                                   Gaps.h5,
                                   if (_isWriting)
@@ -183,7 +194,9 @@ class _VideoCommentsState extends State<VideoComments> {
                               ),
                             ),
                             filled: true,
-                            fillColor: Colors.grey.shade200,
+                            fillColor: isDark
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: Sizes.size12,
                               vertical: Sizes.size10,

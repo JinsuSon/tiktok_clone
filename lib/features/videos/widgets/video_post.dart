@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/contants/gaps.dart';
 import 'package:tiktok_clone/contants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/side_button.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -20,8 +22,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/123.mp4");
+  late VideoPlayerController _videoPlayerController;
 
   final Duration _animationDuration = const Duration(milliseconds: 300);
 
@@ -39,9 +40,13 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/123.mp4");
     await _videoPlayerController.initialize();
-    _videoPlayerController.play();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -67,6 +72,7 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
@@ -185,16 +191,16 @@ class _VideoPostState extends State<VideoPost>
                   child: Text("니꼬"),
                 ),
                 Gaps.v14,
-                const SideButton(
+                SideButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                  text: S.of(context).likeCount(345357353),
                 ),
                 Gaps.v14,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: const SideButton(
+                  child: SideButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33K",
+                    text: S.of(context).commentCount(34557634),
                   ),
                 ),
                 Gaps.v14,
