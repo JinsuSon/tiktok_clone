@@ -38,8 +38,11 @@ class FormButton extends StatelessWidget {
           duration: const Duration(
             microseconds: 400,
           ),
-          child: const Text(
+          child: Text(
             "Next",
+            style: TextStyle(
+              color: disabled ? Colors.grey.shade600 : Colors.white,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
